@@ -1,4 +1,4 @@
-import { useReducer, type FC, type ReactNode } from "react";
+import { useReducer, type FC, type ReactNode, type ChangeEvent } from "react";
 
 import {
     noteContext,
@@ -10,6 +10,7 @@ import {
     type RemoveData,
     type RemovePage,
     type SingleData,
+    type SetActiveInput,
 } from "../store/note-context.tsx";
 
 type NoteContextProviderType = {
@@ -18,14 +19,16 @@ type NoteContextProviderType = {
 
 const initialValue: Datas = {
     datas: [{ name: "90K", item: "MB Can 330ml", plts: 16, data: [] }],
+    activeInput: null,
 };
 
 const noteReducer = (
     state: Datas,
-    action: AddPage | RemovePage | AddData | RemoveData
+    action: AddPage | RemovePage | AddData | RemoveData | SetActiveInput
 ): Datas => {
     if (action.dispatchName === "ADD_PAGE") {
         return {
+            ...state,
             datas: [...state.datas, action.payload.data],
         };
     }
@@ -58,6 +61,17 @@ const noteReducer = (
         return updatedState;
     }
 
+    if (action.dispatchName === "SET_INPUT") {
+        if (!action.payload.current) {
+            return { ...state };
+        }
+
+        return {
+            ...state,
+            activeInput: action.payload.current,
+        };
+    }
+
     return state;
 };
 
@@ -66,6 +80,12 @@ const NoteContextProvider: FC<NoteContextProviderType> = ({ children }) => {
 
     const noteCtxValue: NoteContextType = {
         datas: noteState.datas,
+        activeInput: noteState.activeInput,
+        setActiveInput: (e: ChangeEvent<HTMLInputElement>) =>
+            dispatch({
+                dispatchName: "SET_INPUT",
+                payload: { current: e },
+            }),
         addPage: (page: Data) =>
             dispatch({ dispatchName: "ADD_PAGE", payload: { data: page } }),
         removePage: (name: string) =>

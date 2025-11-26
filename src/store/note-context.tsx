@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, type ChangeEvent } from "react";
 
 export type SingleData = {
     no: string;
@@ -47,6 +47,13 @@ export type RemoveData = {
     };
 };
 
+export type SetActiveInput = {
+    dispatchName: "SET_INPUT";
+    payload: {
+        current: ChangeEvent<HTMLInputElement> | null;
+    };
+};
+
 export type PageActions = {
     addPage: (page: Data) => void;
     removePage: (name: string) => void;
@@ -61,6 +68,7 @@ export type DataActions = {
 
 export type Datas = {
     datas: Data[];
+    activeInput: ChangeEvent<HTMLInputElement> | null;
 };
 
 // export type NoteContextType = Datas &
@@ -71,11 +79,15 @@ export type Datas = {
 
 export type NoteContextType = {
     datas: Data[];
+    activeInput: ChangeEvent<HTMLInputElement> | null;
+    setActiveInput: (e: ChangeEvent<HTMLInputElement>) => void;
 } & PageActions &
     DataActions;
 
 export const noteContext = createContext<NoteContextType>({
     datas: [],
+    activeInput: null,
+    setActiveInput: (e: ChangeEvent<HTMLInputElement>) => console.log(e),
     addPage: (data: Data): void => console.log(data),
     removePage: (name: string): void => console.log(name),
     addData: (data: SingleData): void => console.log(data),

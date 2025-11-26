@@ -9,7 +9,7 @@ const Input = ({ id, label, ...props }: InputType) => {
     return (
         <div>
             <label htmlFor={id}>{label}</label>
-            <input id={id} {...props} />
+            <input id={id} {...props} name={id} />
         </div>
     );
 };

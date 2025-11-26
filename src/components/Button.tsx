@@ -18,7 +18,7 @@ const Button = (props: ButtonType | AnchorType) => {
     if (isAnchor(props)) {
         return <a href={props.href}>{props.children}</a>;
     }
-    return <button>{props.children}</button>;
+    return <button {...props}>{props.children}</button>;
 };
 
 export default Button;
