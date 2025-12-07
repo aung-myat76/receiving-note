@@ -28,7 +28,7 @@ const Summary = () => {
             </h2>
 
             <div className="overflow-x-auto bg-white rounded-xl shadow-sm border border-gray-200">
-                <table className="min-w-full border-collapse text-sm text-left">
+                <table className="min-w-full  border-collapse text-sm text-left">
                     <thead className="bg-gray-100">
                         <tr>
                             <th className="px-4 py-2 font-semibold border-b">

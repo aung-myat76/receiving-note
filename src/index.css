@@ -1,1 +1,10 @@
 @import "tailwindcss";
+
+th {
+    @apply text-[1rem];
+}
+
+td input,
+td {
+    @apply text-[.8rem];
+}
