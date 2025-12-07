@@ -1,19 +1,21 @@
-import { createContext, type ChangeEvent } from "react";
+import { createContext } from "react";
+import SingleData from "../components/SingleData";
 
 export type SingleData = {
-    no: string;
+    id: string | null;
     truckNo: string;
     plts: number;
     loose: number;
     start: string;
     finish: string;
-    remark: string | null;
+    remark: string | number;
 };
 
 export type Data = {
+    id: string | null;
     name: string;
     item: string;
-    plts: number;
+    ctnOrCrt: number;
     data: SingleData[];
 };
 
@@ -24,10 +26,26 @@ export type AddPage = {
     };
 };
 
+export type EditPage = {
+    dispatchName: "EDIT_PAGE";
+    payload: {
+        data: Data;
+        id: string;
+    };
+};
+
 export type RemovePage = {
     dispatchName: "REMOVE_PAGE";
     payload: {
-        name: string;
+        id: string;
+    };
+};
+
+export type SaveData = {
+    dispatchName: "SAVE_DATA";
+    payload: {
+        data: SingleData[];
+        id: string;
     };
 };
 
@@ -42,54 +60,44 @@ export type AddData = {
 export type RemoveData = {
     dispatchName: "REMOVE_DATA";
     payload: {
-        no: string;
+        id: string;
         name: string;
-    };
-};
-
-export type SetActiveInput = {
-    dispatchName: "SET_INPUT";
-    payload: {
-        current: ChangeEvent<HTMLInputElement> | null;
     };
 };
 
 export type PageActions = {
     addPage: (page: Data) => void;
-    removePage: (name: string) => void;
+    editPage: (page: Data, id: string) => void;
+    removePage: (id: string) => void;
 };
 
 export type DataActions = {
+    saveData: (data: SingleData[], id: string) => void;
     addData: (data: SingleData, name: string) => void;
-    removeData: (no: string, name: string) => void;
+    removeData: (id: string, name: string) => void;
 };
-
-// export type DataActions = AddData | RemoveData;
 
 export type Datas = {
     datas: Data[];
-    activeInput: ChangeEvent<HTMLInputElement> | null;
 };
-
-// export type NoteContextType = Datas &
-//     AddPage &
-//     RemovePage &
-//     AddData &
-//     RemoveData;
 
 export type NoteContextType = {
     datas: Data[];
-    activeInput: ChangeEvent<HTMLInputElement> | null;
-    setActiveInput: (e: ChangeEvent<HTMLInputElement>) => void;
 } & PageActions &
     DataActions;
 
+const getDataFromLocal = () => {
+    const data = window.localStorage.getItem("pages");
+
+    return data ? JSON.parse(data) : [];
+};
+
 export const noteContext = createContext<NoteContextType>({
-    datas: [],
-    activeInput: null,
-    setActiveInput: (e: ChangeEvent<HTMLInputElement>) => console.log(e),
+    datas: getDataFromLocal(),
     addPage: (data: Data): void => console.log(data),
-    removePage: (name: string): void => console.log(name),
+    editPage: (data: Data, id: string) => console.log(data, id),
+    removePage: (id: string): void => console.log(id),
+    saveData: (data: SingleData[], id: string) => console.log(data, id),
     addData: (data: SingleData): void => console.log(data),
-    removeData: (no: string): void => console.log(no),
+    removeData: (id: string, name: string): void => console.log(id, name),
 });
