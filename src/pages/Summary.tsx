@@ -39,9 +39,7 @@ const Summary = () => {
                                     key={d.id}
                                     className="text-blue-500  px-4 py-2 font-semibold border-b border-black"
                                 >
-                                    <Link to={`/pages/${d.name}`}>
-                                        {d.name}
-                                    </Link>
+                                    <Link to={`/pages/${d.id}`}>{d.name}</Link>
                                 </th>
                             ))}
                         </tr>

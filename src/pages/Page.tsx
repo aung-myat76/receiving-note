@@ -80,9 +80,9 @@ const Page = () => {
 
                 <Link
                     to={`${analysisPath}/analysis`}
-                    className="bg-yellow-600 flex-1 flex items-center  font-bold rounded-md  text-white px-2 sm:px-4 py-1 sm:py-2  text-xs sm:text-sm hover:bg-yellow-700 transition"
+                    className="bg-yellow-600 flex-1 flex items-center justify-center text-center  font-bold rounded-md  text-white px-2 sm:px-4 py-1 sm:py-2  text-xs sm:text-sm hover:bg-yellow-700 transition"
                 >
-                    <p>Analysis</p>
+                    Analysis
                 </Link>
             </div>
 
