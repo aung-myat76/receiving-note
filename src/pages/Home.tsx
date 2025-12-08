@@ -19,7 +19,7 @@ const Home = () => {
         setIsOpen({ state: false, payload: null });
     };
 
-    const onOpen = (payload: string) => {
+    const onOpen = (payload: string | null) => {
         setIsOpen({ state: true, payload: payload });
     };
 
