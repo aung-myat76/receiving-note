@@ -1,16 +1,33 @@
-import { type ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 
 import useNote from "../hooks/useNote";
 import Button from "../components/Button";
+import Modal from "../components/Modal";
 
 const Home = () => {
     const { datas, removePage } = useNote();
+    const [isOpen, setIsOpen] = useState<{
+        state: boolean;
+        payload: string | null;
+    }>({
+        state: false,
+        payload: null,
+    });
+
+    const onClose = () => {
+        setIsOpen({ state: false, payload: null });
+    };
+
+    const onOpen = (payload: string) => {
+        setIsOpen({ state: true, payload: payload });
+    };
 
     const handleDeletePage = (id: string | null) => {
         if (id) {
             removePage(id);
         }
+        onClose();
     };
 
     let content: ReactNode;
@@ -38,10 +55,10 @@ const Home = () => {
                                 Edit
                             </Link>
                             <Button
-                                onClick={() => handleDeletePage(data.id)}
+                                onClick={() => onOpen(data.id)}
                                 className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition"
                             >
-                                DELETE
+                                Delete
                             </Button>
                         </div>
                     </li>
@@ -52,13 +69,26 @@ const Home = () => {
         content = (
             <p className="text-gray-600 text-center mt-10 text-lg">
                 You haven't added any page yet.
-                <span className="text-blue-600"> Add one?</span>
+                <Link to={"/add-page"} className="text-blue-600">
+                    {" "}
+                    Add one?
+                </Link>
             </p>
         );
     }
 
     return (
-        <main className="max-w-4xl mx-auto w-full px-4 py-6">{content}</main>
+        <main className="max-w-4xl mx-auto w-full px-4 py-6">
+            <Modal
+                isOpen={isOpen.state}
+                onConfirm={() => handleDeletePage(isOpen.payload)}
+                onClose={onClose}
+                btnName="Delete"
+            >
+                Are you sure to Delete this Page?
+            </Modal>
+            {content}
+        </main>
     );
 };
 
