@@ -1,4 +1,4 @@
-import React, {
+import {
     useRef,
     useState,
     type FC,
@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import { createPortal } from "react-dom";
 import Button from "./Button";
-import { getHour, getTime } from "../util/getTime";
+import { getTime } from "../util/getTime";
 import cn from "../util/cn";
 import useNote from "../hooks/useNote";
 
@@ -20,40 +20,40 @@ type ModalType = {
     onConfirm: () => void;
 };
 
-const checkTotalPallets = (isYDC: string, item: string) => {
-    const isQt = item.trim().toLowerCase().includes("qt");
+// const checkTotalPallets = (isYDC: string, item: string) => {
+//     const isQt = item.trim().toLowerCase().includes("qt");
 
-    if (isQt && isYDC === "YDC") {
-        return 18;
-    } else {
-        return 16;
-    }
-    // if (item.trim().toLowerCase().includes("30")) {
-    //     return 42;
-    // } else if (item.trim().toLowerCase().includes("10")) {
-    //     return 32;
-    // } else {
-    //     if (nowHour >= 6 && nowHour <= 18) {
-    //         if (
-    //             (truckNo === "7Q/3929" ||
-    //                 truckNo === "7Q/3911" ||
-    //                 truckNo === "7Q/3891") &&
-    //             item.trim().toLowerCase().includes("qt")
-    //         ) {
-    //             return 18;
-    //         } else {
-    //             return 16;
-    //         }
-    //     } else {
-    //         return 16;
-    //     }
-    // }
-};
+//     if (isQt && isYDC === "YDC") {
+//         return 18;
+//     } else {
+//         return 16;
+//     }
+//     // if (item.trim().toLowerCase().includes("30")) {
+//     //     return 42;
+//     // } else if (item.trim().toLowerCase().includes("10")) {
+//     //     return 32;
+//     // } else {
+//     //     if (nowHour >= 6 && nowHour <= 18) {
+//     //         if (
+//     //             (truckNo === "7Q/3929" ||
+//     //                 truckNo === "7Q/3911" ||
+//     //                 truckNo === "7Q/3891") &&
+//     //             item.trim().toLowerCase().includes("qt")
+//     //         ) {
+//     //             return 18;
+//     //         } else {
+//     //             return 16;
+//     //         }
+//     //     } else {
+//     //         return 16;
+//     //     }
+//     // }
+// };
 
 const TruckModal: FC<ModalType> = ({
     children,
     isOpen,
-    item,
+    // item,
     pageId,
     onClose,
     onConfirm
@@ -67,7 +67,7 @@ const TruckModal: FC<ModalType> = ({
     const endRef = useRef<HTMLInputElement | null>(null);
     const remarkRef = useRef<HTMLTextAreaElement | null>(null);
     const [isMBLTruck, setIsMBLTruck] = useState("MBL");
-    const [isYDC, setIsYDC] = useState("CWH");
+    // const [isYDC, setIsYDC] = useState("CWH");
     const { addData } = useNote();
     if (!modalRoot) return null;
 
@@ -137,7 +137,7 @@ const TruckModal: FC<ModalType> = ({
                                     Other Trucks
                                 </Button>
                             </div>
-                            <div className="center-row gap-3 mb-3">
+                            {/* <div className="center-row gap-3 mb-3">
                                 <Button
                                     className={cn(
                                         baseBtn,
@@ -154,7 +154,7 @@ const TruckModal: FC<ModalType> = ({
                                     onClick={() => setIsYDC("YDC")}>
                                     MBL YDC
                                 </Button>
-                            </div>
+                            </div> */}
                             <form
                                 ref={formRef}
                                 onSubmit={handleFormSubmit}
@@ -234,12 +234,33 @@ const TruckModal: FC<ModalType> = ({
                                         id="plt"
                                         type="number"
                                         name="plt"
-                                        className="py-2 font-bold  w-40 bg-stone-200 px-2 rounded-md"
-                                        defaultValue={checkTotalPallets(
-                                            isYDC,
-                                            item
-                                        ).toString()}
+                                        className="py-2 font-bold  w-20 bg-stone-200 px-2 rounded-md"
+                                        defaultValue={16}
                                     />
+                                    {/* <span
+                                        onClick={() =>
+                                            (pltRef.current!.value = "16")
+                                        }
+                                        className={cn(
+                                            "w-10 text-center p-1 text-white rounded-sm ",
+                                            pltRef.current!.value === "16"
+                                                ? "bg-blue-600"
+                                                : "bg-stone-400"
+                                        )}>
+                                        16
+                                    </span>
+                                    <span
+                                        onClick={() =>
+                                            (pltRef.current!.value = "18")
+                                        }
+                                        className={cn(
+                                            "w-10 text-center p-1 text-white rounded-sm ",
+                                            pltRef.current!.value === "18"
+                                                ? "bg-blue-600"
+                                                : "bg-stone-400"
+                                        )}>
+                                        18
+                                    </span> */}
                                 </div>
                                 <div className="center-row gap-2">
                                     <label className="w-20" htmlFor="loose">

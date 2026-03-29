@@ -38,12 +38,12 @@ const Row: FC<RowType> = ({ no, id, lineName, initialData }) => {
     const handleUpdateData = () => {
         const newData = {
             id: id,
-            truckNo: truckNoRef.current?.getValue(),
-            plts: pltsRef.current?.getValue(),
-            loose: looseRef.current?.getValue(),
-            start: startRef.current?.getValue(),
-            finish: finishRef.current?.getValue(),
-            remark: remarkRef.current?.getValue()
+            truckNo: truckNoRef.current?.getValue() || "",
+            plts: +pltsRef.current!.getValue() || 0,
+            loose: +looseRef.current!.getValue() || 0,
+            start: startRef.current?.getValue() || "",
+            finish: finishRef.current?.getValue() || "",
+            remark: remarkRef.current?.getValue() || ""
         };
 
         if (id) {

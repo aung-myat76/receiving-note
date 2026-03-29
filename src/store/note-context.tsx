@@ -84,6 +84,7 @@ export type DataActions = {
     saveData: (data: SingleData[], id: string) => void;
     addData: (data: SingleData, name: string) => void;
     removeData: (id: string, name: string) => void;
+    updateData: (id: string, name: string, data: SingleData) => void;
 };
 
 export type Datas = {

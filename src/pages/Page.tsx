@@ -2,12 +2,12 @@ import { Link, useLocation, useParams } from "react-router-dom";
 import useNote from "../hooks/useNote";
 import Row from "../components/Row";
 import Button from "../components/Button";
-import useLocalStorage from "../hooks/useLocalStorage";
+// import useLocalStorage from "../hooks/useLocalStorage";
 import { useRef, useState } from "react";
 import TruckModal from "../components/TruckModal";
 
 const Page = () => {
-    const { pageId } = useParams();
+    const { pageId = "" } = useParams();
     const tableRef = useRef<HTMLTableSectionElement>(null);
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
@@ -18,38 +18,38 @@ const Page = () => {
         setIsAddModalOpen(false);
     };
 
-    const { datas, saveData } = useNote();
+    const { datas } = useNote();
     const selectedLine = datas.find((line) => line.id === pageId);
-    const [rowNum, setRowNum] = useLocalStorage("rowNum", 10);
+    // const [rowNum, setRowNum] = useLocalStorage("rowNum", 10);
     const location = useLocation();
 
     const selectedPage = datas.find((page) => page.id === pageId);
 
-    const handleAddRow = () => setRowNum((prev: number) => prev + 5);
-    const handleDeleteRow = () =>
-        setRowNum((prev: number) => Math.max(prev - 5, 5));
-    console.log(selectedLine);
-    const handleSaveData = () => {
-        if (!tableRef.current) return;
+    // const handleAddRow = () => setRowNum((prev: number) => prev + 5);
+    // const handleDeleteRow = () =>
+    //     setRowNum((prev: number) => Math.max(prev - 5, 5));
+    // console.log(selectedLine);
+    // const handleSaveData = () => {
+    //     if (!tableRef.current) return;
 
-        const rows = Array.from(tableRef.current.querySelectorAll("tr"));
-        const rowData = rows.map((row) => {
-            const inputs = Array.from(row.querySelectorAll("input"));
-            return {
-                id: Math.random().toString(),
-                truckNo: inputs[0].value,
-                plts: +inputs[1].value,
-                loose: +inputs[2].value,
-                start: inputs[3].value,
-                finish: inputs[4].value,
-                remark:
-                    inputs[5].value ||
-                    +inputs[1].value * selectedPage!.ctnOrCrt + +inputs[2].value
-            };
-        });
+    //     const rows = Array.from(tableRef.current.querySelectorAll("tr"));
+    //     const rowData = rows.map((row) => {
+    //         const inputs = Array.from(row.querySelectorAll("input"));
+    //         return {
+    //             id: Math.random().toString(),
+    //             truckNo: inputs[0].value,
+    //             plts: +inputs[1].value,
+    //             loose: +inputs[2].value,
+    //             start: inputs[3].value,
+    //             finish: inputs[4].value,
+    //             remark:
+    //                 inputs[5].value ||
+    //                 +inputs[1].value * selectedPage!.ctnOrCrt + +inputs[2].value
+    //         };
+    //     });
 
-        if (pageId) saveData(rowData, pageId);
-    };
+    //     if (pageId) saveData(rowData, pageId);
+    // };
 
     const analysisPath = location.pathname;
 
@@ -90,7 +90,7 @@ const Page = () => {
                     <Button
                         onClick={onAddModalOpen}
                         className="bg-green-600 flex-1 font-bold rounded-md text-white p-2 sm:px-4 sm:py-2  text-xs sm:text-sm hover:bg-green-700 transition">
-                        Add
+                        Add Transfer
                     </Button>
 
                     <Link
@@ -148,7 +148,7 @@ const Page = () => {
                                     key={i}
                                     no={i}
                                     lineName={selectedLine.name}
-                                    id={row.id}
+                                    id={row.id || ""}
                                     initialData={row}
                                 />
                                 // <RowData
