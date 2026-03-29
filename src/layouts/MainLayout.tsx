@@ -1,6 +1,6 @@
 import { Link, NavLink, Outlet } from "react-router-dom";
 import Header from "../components/Header";
-import logo from "../assets/logo.svg";
+import logo from "../assets/newLogo.svg";
 import useNote from "../hooks/useNote";
 
 const MainLayout = () => {
