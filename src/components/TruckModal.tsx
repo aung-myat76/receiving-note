@@ -234,7 +234,7 @@ const TruckModal: FC<ModalType> = ({
                                         id="plt"
                                         type="number"
                                         name="plt"
-                                        className="py-2 font-bold  w-20 bg-stone-200 px-2 rounded-md"
+                                        className="py-2 font-bold  w-50 bg-stone-200 px-2 rounded-md"
                                         defaultValue={16}
                                     />
                                     {/* <span
