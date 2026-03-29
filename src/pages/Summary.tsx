@@ -8,16 +8,17 @@ const Summary = () => {
 
     const tds = datas.map((d) => {
         const plts =
-            d.data.reduce((currentSum, data) => data.plts + currentSum, 0) || 0;
+            d.data.reduce((currentSum, data) => +data.plts + currentSum, 0) ||
+            0;
         const loose =
-            d.data.reduce((currentSum, data) => data.loose + currentSum, 0) ||
+            d.data.reduce((currentSum, data) => +data.loose + currentSum, 0) ||
             0;
         return {
             item: d.item,
             count: d.data.length,
             plts: plts,
             loose: loose,
-            total: plts * d.ctnOrCrt + loose,
+            total: plts * d.ctnOrCrt + loose
         };
     });
 
@@ -37,8 +38,7 @@ const Summary = () => {
                             {datas.map((d) => (
                                 <th
                                     key={d.id}
-                                    className="text-blue-500  px-4 py-2 font-semibold border-b border-black"
-                                >
+                                    className="text-blue-500  px-4 py-2 font-semibold border-b border-black">
                                     <Link to={`/pages/${d.id}`}>{d.name}</Link>
                                 </th>
                             ))}
@@ -48,16 +48,14 @@ const Summary = () => {
                         {rowName.map((row) => (
                             <tr
                                 key={row}
-                                className="odd:bg-white even:bg-gray-50"
-                            >
+                                className="odd:bg-white even:bg-gray-50">
                                 <th className="px-4 py-2 font-medium border-b capitalize">
                                     {row}
                                 </th>
                                 {tds.map((td, idx) => (
                                     <td
                                         key={idx}
-                                        className="px-4 py-2 border-b text-gray-700 whitespace-nowrap"
-                                    >
+                                        className="px-4 py-2 border-b text-gray-700 whitespace-nowrap">
                                         {td[row as keyof typeof td]}
                                     </td>
                                 ))}

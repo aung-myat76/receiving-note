@@ -3,24 +3,30 @@ import Button from "./Button";
 import type { RefType } from "./RefInput";
 import RefInput from "./RefInput";
 import type { SingleData } from "../store/note-context";
+import useNote from "../hooks/useNote";
+import { getTime } from "../util/getTime";
 
 type RowType = {
     no: number;
+    id: string;
+    lineName: string;
     initialData: SingleData | undefined;
 };
 
-const Row: FC<RowType> = ({ no, initialData }) => {
+const Row: FC<RowType> = ({ no, id, lineName, initialData }) => {
     if (initialData === undefined) {
         initialData = {
-            id: null,
-            truckNo: "",
-            plts: 16,
+            id: id || null,
+            truckNo: "-",
+            plts: 0,
             loose: 0,
-            start: "",
-            finish: "",
-            remark: "",
+            start: "-",
+            finish: "-",
+            remark: ""
         };
     }
+
+    const { removeData, updateData } = useNote();
 
     const truckNoRef = useRef<RefType>(null);
     const pltsRef = useRef<RefType>(null);
@@ -29,17 +35,47 @@ const Row: FC<RowType> = ({ no, initialData }) => {
     const finishRef = useRef<RefType>(null);
     const remarkRef = useRef<RefType>(null);
 
-    const handleStartTime = () => {
-        startRef.current?.getNow();
+    const handleUpdateData = () => {
+        const newData = {
+            id: id,
+            truckNo: truckNoRef.current?.getValue(),
+            plts: pltsRef.current?.getValue(),
+            loose: looseRef.current?.getValue(),
+            start: startRef.current?.getValue(),
+            finish: finishRef.current?.getValue(),
+            remark: remarkRef.current?.getValue()
+        };
+
+        if (id) {
+            updateData(id, lineName, newData);
+        }
     };
 
-    const handleFinishTime = () => {
-        finishRef.current?.getNow();
+    // const handleStartTime = () => {
+    //     startRef.current?.getNow();
+    // };
+
+    // const handleFinishTime = () => {
+    //     finishRef.current?.getNow();
+    // };
+
+    const handleFinish = () => {
+        updateData(id, lineName, { ...initialData, finish: getTime() });
     };
 
     return (
         <tr className="border-b hover:bg-gray-50 transition">
             {/* Row Number */}
+            <td>
+                <Button
+                    className={
+                        "p-2 rounded-md text-white font-bold bg-blue-600 disabled:bg-stone-400"
+                    }
+                    disabled={initialData.finish !== ""}
+                    onClick={handleFinish}>
+                    Finished
+                </Button>
+            </td>
             <td className="px-3 py-2 text-sm text-gray-700 font-medium">
                 {no + 1}
             </td>
@@ -83,12 +119,11 @@ const Row: FC<RowType> = ({ no, initialData }) => {
                         defaultValue={initialData.start}
                         ref={startRef}
                     />
-                    <Button
+                    {/* <Button
                         onClick={handleStartTime}
-                        className="bg-blue-500 text-white px-2 py-1 rounded-md text-xs hover:bg-blue-600 transition"
-                    >
+                        className="bg-blue-500 text-white px-2 py-1 rounded-md text-xs hover:bg-blue-600 transition">
                         Now
-                    </Button>
+                    </Button> */}
                 </div>
             </td>
 
@@ -101,12 +136,11 @@ const Row: FC<RowType> = ({ no, initialData }) => {
                         defaultValue={initialData.finish}
                         ref={finishRef}
                     />
-                    <Button
+                    {/* <Button
                         onClick={handleFinishTime}
-                        className="bg-blue-500 text-white px-2 py-1 rounded-md text-xs hover:bg-blue-600 transition"
-                    >
+                        className="bg-blue-500 text-white px-2 py-1 rounded-md text-xs hover:bg-blue-600 transition">
                         Now
-                    </Button>
+                    </Button> */}
                 </div>
             </td>
 
@@ -118,6 +152,18 @@ const Row: FC<RowType> = ({ no, initialData }) => {
                     defaultValue={initialData.remark}
                     id="remark"
                 />
+            </td>
+            <td>
+                <Button
+                    className="p-2 mx-1 rounded-md font-bold bg-blue-600 text-white"
+                    onClick={() => handleUpdateData()}>
+                    Update
+                </Button>
+                <Button
+                    className="p-2 mx-1 rounded-md font-bold bg-red-600 text-white"
+                    onClick={() => removeData(id, lineName)}>
+                    Delete
+                </Button>
             </td>
         </tr>
     );

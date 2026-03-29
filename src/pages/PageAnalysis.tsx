@@ -14,16 +14,18 @@ const PageAnalysis = () => {
     const { pageId } = useParams();
 
     const selectedPage = datas.find((data) => data.id === pageId);
-    const filterData = selectedPage?.data.filter(
-        (d) => d.truckNo && d.start && d.finish
+    const filterData = selectedPage?.data.filter((d) =>
+        d.truckNo.trim().toUpperCase()
     );
 
     const count = filterData?.length || 0;
-    const plts: number = filterData?.reduce((sum, d) => sum + d.plts, 0) || 0;
-    const loose: number = filterData?.reduce((sum, d) => sum + d.loose, 0) || 0;
+    const plts: number = filterData?.reduce((sum, d) => sum + +d.plts, 0) || 0;
+    const loose: number =
+        filterData?.reduce((sum, d) => sum + +d.loose, 0) || 0;
     const total: number = plts * (selectedPage?.ctnOrCrt || 0) + loose;
 
-    const truckNumbers = filterData?.map((d) => d.truckNo) || [];
+    const truckNumbers =
+        filterData?.map((d) => d.truckNo.trim().toUpperCase()) || [];
     const truckCount = Object.entries(countDuplicate(truckNumbers));
 
     return (
@@ -65,8 +67,7 @@ const PageAnalysis = () => {
                     {truckCount.map(([truck, freq]) => (
                         <li
                             key={truck}
-                            className="flex justify-between border-b border-gray-200 pb-1"
-                        >
+                            className="flex justify-between border-b border-gray-200 pb-1">
                             <span className="text-gray-700">{truck}</span>
                             <span className="font-medium text-gray-800">
                                 {freq}

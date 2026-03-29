@@ -12,7 +12,7 @@ const Home = () => {
         payload: string | null;
     }>({
         state: false,
-        payload: null,
+        payload: null
     });
 
     const onClose = () => {
@@ -38,8 +38,7 @@ const Home = () => {
                 {datas.map((data) => (
                     <li
                         key={data.id}
-                        className="p-4 bg-white shadow-sm border border-gray-200 rounded-xl flex flex-col gap-2 hover:shadow-md transition"
-                    >
+                        className="p-4 bg-white shadow-sm border border-gray-200 rounded-xl flex flex-col gap-2 hover:shadow-md transition">
                         <Link to={`/pages/${data.id}`}>
                             <h2 className="text-xl font-semibold text-blue-600 hover:underline">
                                 {data.name}
@@ -50,14 +49,12 @@ const Home = () => {
                         <div className="flex items-center justify-end">
                             <Link
                                 to={`/pages/${data.id}/edit`}
-                                className="bg-blue-500 mx-3 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition"
-                            >
+                                className="bg-blue-500 mx-3 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
                                 Edit
                             </Link>
                             <Button
                                 onClick={() => onOpen(data.id)}
-                                className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition"
-                            >
+                                className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">
                                 Delete
                             </Button>
                         </div>
@@ -78,17 +75,18 @@ const Home = () => {
     }
 
     return (
-        <main className="max-w-4xl mx-auto w-full px-4 py-6">
+        <>
             <Modal
                 isOpen={isOpen.state}
                 onConfirm={() => handleDeletePage(isOpen.payload)}
                 onClose={onClose}
-                btnName="Delete"
-            >
-                Are you sure to Delete this Page?
+                btnName="Delete">
+                Are you sure to Delete this Line?
             </Modal>
-            {content}
-        </main>
+            <main className="max-w-4xl mx-auto w-full px-4 py-6">
+                {content}
+            </main>{" "}
+        </>
     );
 };
 

@@ -11,6 +11,7 @@ import {
     type RemovePage,
     type SaveData,
     type SingleData,
+    type UpdateData
 } from "../store/note-context.tsx";
 
 type NoteContextProviderType = {
@@ -23,12 +24,19 @@ type NoteContextProviderType = {
 
 const noteReducer = (
     state: Data[],
-    action: AddPage | EditPage | RemovePage | SaveData | AddData | RemoveData
+    action:
+        | AddPage
+        | EditPage
+        | RemovePage
+        | SaveData
+        | AddData
+        | RemoveData
+        | UpdateData
 ): Data[] => {
     if (action.dispatchName === "ADD_PAGE") {
         const updatedPages = [
             ...state,
-            { ...action.payload.data, id: Math.random().toString() },
+            { ...action.payload.data, id: Math.random().toString() }
         ];
         window.localStorage.setItem("pages", JSON.stringify(updatedPages));
         return updatedPages;
@@ -77,19 +85,22 @@ const noteReducer = (
         const updatedState = [...state];
 
         const selectedData = updatedState?.find(
-            (data) => data.name === action.payload.name
+            (data) => data.id === action.payload.id
         );
 
-        if (action.payload.data.id === null) {
-            selectedData?.data.push({
-                ...action.payload.data,
-                id: Math.random().toString(),
-            });
-            console.log("add");
-        } else {
-            // 4.12 need to fix
-            console.log("edit");
+        if (selectedData) {
+            selectedData.data.push(action.payload.data);
         }
+
+        // if (action.payload.data.id === null) {
+        //     selectedData?.data.push({
+        //         ...action.payload.data
+        //     });
+        //     console.log("add");
+        // } else {
+        //     // 4.12 need to fix
+        //     console.log("edit");
+        // }
 
         window.localStorage.setItem("pages", JSON.stringify(updatedState));
         return updatedState;
@@ -109,6 +120,26 @@ const noteReducer = (
             selectedDataIndex
         ].data.filter((data) => data.id !== action.payload.id);
         // }
+        window.localStorage.setItem("pages", JSON.stringify(updatedState));
+        return updatedState;
+    }
+    if (action.dispatchName === "UPDATE_DATA") {
+        const updatedState = [...state];
+        // const selectedData = updatedState.find(
+        //     (data) => data.name === action.payload.name
+        // );
+        const selectedDataIndex = updatedState.findIndex(
+            (data) => data.name === action.payload.name
+        );
+        const selectedRowDataIndex = updatedState
+            .find((line) => line.name === action.payload.name)
+            ?.data.findIndex((row) => row.id === action.payload.id);
+
+        // if (selectedData) {
+        if (selectedRowDataIndex) {
+            updatedState[selectedDataIndex].data[selectedRowDataIndex] =
+                action.payload.data;
+        }
         window.localStorage.setItem("pages", JSON.stringify(updatedState));
         return updatedState;
     }
@@ -133,27 +164,32 @@ const NoteContextProvider: FC<NoteContextProviderType> = ({ children }) => {
         editPage: (page: Data, id: string) =>
             dispatch({
                 dispatchName: "EDIT_PAGE",
-                payload: { data: page, id: id },
+                payload: { data: page, id: id }
             }),
         removePage: (id: string) =>
             dispatch({ dispatchName: "REMOVE_PAGE", payload: { id: id } }),
         saveData: (data: SingleData[], id: string) => {
             dispatch({
                 dispatchName: "SAVE_DATA",
-                payload: { data: data, id: id },
+                payload: { data: data, id: id }
             });
         },
 
-        addData: (data: SingleData, name: string) =>
+        addData: (data: SingleData, id: string) =>
             dispatch({
                 dispatchName: "ADD_DATA",
-                payload: { data: data, name: name },
+                payload: { data: data, id: id }
             }),
         removeData: (id: string, name: string) =>
             dispatch({
                 dispatchName: "REMOVE_DATA",
-                payload: { id: id.toString(), name: name },
+                payload: { id: id.toString(), name: name }
             }),
+        updateData: (id: string, name: string, data: SingleData) =>
+            dispatch({
+                dispatchName: "UPDATE_DATA",
+                payload: { id: id.toString(), name: name, data: data }
+            })
     };
 
     return (

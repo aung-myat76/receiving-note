@@ -1,5 +1,6 @@
 import { type FC, type ReactNode } from "react";
 import Button from "./Button";
+import { createPortal } from "react-dom";
 
 type ModalType = {
     children: ReactNode;
@@ -14,19 +15,20 @@ const Modal: FC<ModalType> = ({
     isOpen,
     onClose,
     onConfirm,
-    children,
+    children
 }) => {
-    return (
+    const modalRoot = document.getElementById("modal-root");
+    if (!modalRoot) return null;
+
+    return createPortal(
         <>
             {isOpen && (
                 <div
                     onClick={onClose}
-                    className="absolute inset-0 opacity-90 flex justify-center items-center w-full bg-stone-500"
-                >
+                    className="absolute inset-0 opacity-90 flex justify-center items-center w-full bg-stone-500">
                     <div
                         onClick={(e) => e.stopPropagation()}
-                        className="w-[15rem] p-5 rounded-lg bg-white text-stone-900"
-                    >
+                        className="w-60 p-5 rounded-lg bg-white text-stone-900">
                         <div>
                             <h2 className="text-lg text-start mb-3 font-semibold">
                                 {children}
@@ -35,21 +37,20 @@ const Modal: FC<ModalType> = ({
                         <div className="action flex justify-end gap-2">
                             <Button
                                 className="btn btn-secondary"
-                                onClick={onClose}
-                            >
+                                onClick={onClose}>
                                 Cancel
                             </Button>
                             <Button
                                 className="btn btn-danger"
-                                onClick={onConfirm}
-                            >
+                                onClick={onConfirm}>
                                 {btnName}
                             </Button>
                         </div>
                     </div>
                 </div>
             )}
-        </>
+        </>,
+        modalRoot
     );
 };
 

@@ -53,7 +53,7 @@ export type AddData = {
     dispatchName: "ADD_DATA";
     payload: {
         data: SingleData;
-        name: string;
+        id: string;
     };
 };
 
@@ -62,6 +62,15 @@ export type RemoveData = {
     payload: {
         id: string;
         name: string;
+    };
+};
+
+export type UpdateData = {
+    dispatchName: "UPDATE_DATA";
+    payload: {
+        id: string;
+        name: string;
+        data: SingleData;
     };
 };
 
@@ -100,4 +109,6 @@ export const noteContext = createContext<NoteContextType>({
     saveData: (data: SingleData[], id: string) => console.log(data, id),
     addData: (data: SingleData): void => console.log(data),
     removeData: (id: string, name: string): void => console.log(id, name),
+    updateData: (id: string, name: string, data: SingleData): void =>
+        console.log(id, name, data)
 });
