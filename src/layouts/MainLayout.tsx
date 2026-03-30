@@ -7,7 +7,7 @@ const MainLayout = () => {
     const { datas } = useNote();
 
     return (
-        <div className="min-h-screen bg-gray-50 flex flex-col ">
+        <div className="min-h-screen bg-gray-50 flex flex-col overflow-hidden">
             {/* NAVBAR */}
             <nav className="w-full bg-white shadow-sm py-4 mb-5">
                 <div className="max-w-5xl mx-auto flex items-center justify-between px-4">
@@ -34,13 +34,13 @@ const MainLayout = () => {
                     </div>
                 </div>
             </nav>
-            <ul className="flex px-2 justify-start gap-2">
+            <ul className="flex overscroll-contain overflow-x-auto px-2 justify-start gap-2">
                 <li key={"home"}>
                     <NavLink
                         className={({ isActive }) =>
                             !isActive
-                                ? "px-4 py-2 overflow-x-auto rounded-md bg-stone-200 font-bold"
-                                : "px-4 py-2 overflow-x-auto rounded-md bg-blue-600 font-bold text-white"
+                                ? "px-4 py-2  rounded-md bg-stone-200 font-bold"
+                                : "px-4 py-2  rounded-md bg-blue-600 font-bold text-white"
                         }
                         to={`/`}>
                         Home
@@ -51,8 +51,8 @@ const MainLayout = () => {
                         <NavLink
                             className={({ isActive }) =>
                                 !isActive
-                                    ? "px-4 py-2 overflow-x-auto rounded-md bg-stone-200 font-bold"
-                                    : "px-4 py-2 overflow-x-auto rounded-md bg-blue-600 font-bold text-white"
+                                    ? "px-4 py-2 rounded-md bg-stone-200 font-bold"
+                                    : "px-4 py-2 rounded-md bg-blue-600 font-bold text-white"
                             }
                             to={`/pages/${data.id}`}>
                             {data.name}
