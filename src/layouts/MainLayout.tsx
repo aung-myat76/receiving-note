@@ -39,8 +39,8 @@ const MainLayout = () => {
                     <NavLink
                         className={({ isActive }) =>
                             !isActive
-                                ? "px-4 py-2 flex-1  rounded-md bg-stone-200 font-bold"
-                                : "px-4 py-2 flex-1  rounded-md bg-blue-600 font-bold text-white"
+                                ? "px-4 py-2  rounded-md bg-stone-200 font-bold"
+                                : "px-4 py-2   rounded-md bg-blue-600 font-bold text-white"
                         }
                         to={`/`}>
                         Home
@@ -51,8 +51,8 @@ const MainLayout = () => {
                         <NavLink
                             className={({ isActive }) =>
                                 !isActive
-                                    ? "px-4 py-2 flex-1 rounded-md bg-stone-200 font-bold"
-                                    : "px-4 py-2 flex-1 rounded-md bg-blue-600 font-bold text-white"
+                                    ? "px-4 py-2  rounded-md bg-stone-200 font-bold"
+                                    : "px-4 py-2 rounded-md bg-blue-600 font-bold text-white"
                             }
                             to={`/pages/${data.id}`}>
                             {data.name}
