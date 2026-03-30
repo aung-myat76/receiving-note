@@ -22,7 +22,7 @@ const Page = () => {
     const selectedLine = datas.find((line) => line.id === pageId);
     // const [rowNum, setRowNum] = useLocalStorage("rowNum", 10);
     const location = useLocation();
-
+    // console.log(datas);
     const selectedPage = datas.find((page) => page.id === pageId);
 
     // const handleAddRow = () => setRowNum((prev: number) => prev + 5);
@@ -145,10 +145,10 @@ const Page = () => {
                         <tbody ref={tableRef}>
                             {selectedLine?.data.map((row, i) => (
                                 <Row
-                                    key={i}
+                                    key={row.id}
                                     no={i}
                                     lineName={selectedLine.name}
-                                    id={row.id || ""}
+                                    id={row.id}
                                     initialData={row}
                                 />
                                 // <RowData

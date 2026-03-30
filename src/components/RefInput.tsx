@@ -2,7 +2,7 @@ import {
     forwardRef,
     useImperativeHandle,
     useRef,
-    type ComponentPropsWithoutRef,
+    type ComponentPropsWithoutRef
 } from "react";
 
 type RefInputType = {
@@ -12,6 +12,7 @@ type RefInputType = {
 export interface RefType {
     getNow: () => void;
     getValue: () => string;
+    setValue: (value: string) => void;
 }
 
 const getCurrentTime = () => {
@@ -20,7 +21,7 @@ const getCurrentTime = () => {
         timeZone: "Asia/Yangon",
         hour: "2-digit",
         minute: "2-digit",
-        hour12: false,
+        hour12: false
     }).format(d);
 };
 
@@ -35,6 +36,9 @@ const RefInput = forwardRef<RefType, RefInputType>(
             getValue() {
                 return inputRef.current!.value;
             },
+            setValue(value: string) {
+                inputRef.current!.value = value;
+            }
         }));
 
         return (

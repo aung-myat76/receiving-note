@@ -125,6 +125,7 @@ const noteReducer = (
     }
     if (action.dispatchName === "UPDATE_DATA") {
         const updatedState = [...state];
+        // console.log("updated");
         // const selectedData = updatedState.find(
         //     (data) => data.name === action.payload.name
         // );
@@ -133,10 +134,12 @@ const noteReducer = (
         );
         const selectedRowDataIndex = updatedState
             .find((line) => line.name === action.payload.name)
-            ?.data.findIndex((row) => row.id === action.payload.id);
+            ?.data.findIndex((row) => row.id === action.payload.id) as number;
 
         // if (selectedData) {
-        if (selectedRowDataIndex) {
+        // console.log(selectedRowDataIndex);
+        if (selectedRowDataIndex >= 0) {
+            console.log(action.payload.data);
             updatedState[selectedDataIndex].data[selectedRowDataIndex] =
                 action.payload.data;
         }

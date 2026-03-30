@@ -8,7 +8,7 @@ import { getTime } from "../util/getTime";
 
 type RowType = {
     no: number;
-    id: string;
+    id: string | null;
     lineName: string;
     initialData: SingleData | undefined;
 };
@@ -16,12 +16,12 @@ type RowType = {
 const Row: FC<RowType> = ({ no, id, lineName, initialData }) => {
     if (initialData === undefined) {
         initialData = {
-            id: id || null,
-            truckNo: "-",
+            id: id,
+            truckNo: "",
             plts: 0,
             loose: 0,
-            start: "-",
-            finish: "-",
+            start: "",
+            finish: "",
             remark: ""
         };
     }
@@ -47,6 +47,7 @@ const Row: FC<RowType> = ({ no, id, lineName, initialData }) => {
         };
 
         if (id) {
+            console.log(newData);
             updateData(id, lineName, newData);
         }
     };
@@ -60,7 +61,12 @@ const Row: FC<RowType> = ({ no, id, lineName, initialData }) => {
     // };
 
     const handleFinish = () => {
-        updateData(id, lineName, { ...initialData, finish: getTime() });
+        console.log(id, lineName, initialData);
+        const newData = { ...initialData, finish: getTime() };
+        finishRef.current?.setValue(newData.finish);
+        if (id) {
+            updateData(id, lineName, newData);
+        }
     };
 
     return (
@@ -160,8 +166,8 @@ const Row: FC<RowType> = ({ no, id, lineName, initialData }) => {
                     Update
                 </Button>
                 <Button
-                    className="p-2 mx-1 rounded-md font-bold bg-red-600 text-white"
-                    onClick={() => removeData(id, lineName)}>
+                    className="p-2 mx-1     rounded-md font-bold bg-red-600 text-white"
+                    onClick={() => (id ? removeData(id, lineName) : null)}>
                     Delete
                 </Button>
             </td>

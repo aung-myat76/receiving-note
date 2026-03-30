@@ -64,7 +64,7 @@ const TruckModal: FC<ModalType> = ({
     const pltRef = useRef<HTMLInputElement | null>(null);
     const looseRef = useRef<HTMLInputElement | null>(null);
     const startRef = useRef<HTMLInputElement | null>(null);
-    const endRef = useRef<HTMLInputElement | null>(null);
+    const finishRef = useRef<HTMLInputElement | null>(null);
     const remarkRef = useRef<HTMLTextAreaElement | null>(null);
     const [isMBLTruck, setIsMBLTruck] = useState("MBL");
     // const [isYDC, setIsYDC] = useState("CWH");
@@ -83,7 +83,7 @@ const TruckModal: FC<ModalType> = ({
                 plts: +formObj.plt,
                 loose: +formObj.loose,
                 start: formObj.start.toString(),
-                finish: formObj.end.toString(),
+                finish: formObj.finish.toString(),
                 remark: formObj.remark.toString()
             };
             if (formObj.truck.toString()) {
@@ -296,18 +296,18 @@ const TruckModal: FC<ModalType> = ({
                                     />
                                 </div>
                                 <div className="center-row gap-2">
-                                    <label className="w-20" htmlFor="end">
-                                        End
+                                    <label className="w-20" htmlFor="finish">
+                                        Finsh
                                     </label>
                                     <input
-                                        ref={endRef}
+                                        ref={finishRef}
                                         onChange={(e) =>
-                                            (endRef.current!.value =
+                                            (finishRef.current!.value =
                                                 e.target.value)
                                         }
                                         className="py-2 font-bold  w-40 bg-stone-200 px-2 rounded-md"
-                                        id="end"
-                                        name="end"
+                                        id="finish"
+                                        name="finish"
                                         defaultValue={""}
                                     />
                                 </div>
