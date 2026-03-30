@@ -25,7 +25,7 @@ const Modal: FC<ModalType> = ({
             {isOpen && (
                 <div
                     onClick={onClose}
-                    className="absolute inset-0 opacity-90 flex justify-center items-center w-full bg-stone-500">
+                    className="absolute inset-0 flex justify-center items-center size-screen bg-stone-500/90">
                     <div
                         onClick={(e) => e.stopPropagation()}
                         className="w-60 p-5 rounded-lg bg-white text-stone-900">
