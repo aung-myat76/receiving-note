@@ -34,7 +34,7 @@ const MainLayout = () => {
                     </div>
                 </div>
             </nav>
-            <ul className="flex flex-wrap px-2 justify-start gap-2">
+            <ul className="flex px-2 justify-start gap-2">
                 <li key={"home"}>
                     <NavLink
                         className={({ isActive }) =>
